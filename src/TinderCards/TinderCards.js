@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import TinderCard from "react-tinder-card";
 import "./TinderCards.css";
-import axios from "./../axios";
+import data from "../data";
 
 const TinderCards = () => {
-  const [people, setPeople] = useState([]);
+  const [people, setPeople] = useState();
   useEffect(() => {
-    async function fetchPeople() {
-      const req = await axios
-        .get("/tinder/cards")
-        .then((data) => setPeople(data.data));
-    }
-    fetchPeople();
+    setPeople(data);
   }, []);
   const swiped = (direction, nameToDelete) => {
     console.log("removing " + nameToDelete);
@@ -22,7 +17,7 @@ const TinderCards = () => {
   return (
     <div className="tinderCards">
       <div className="tinderCards__cardContainer">
-        {people.map((person, index) => (
+        {people?.map((person, index) => (
           <TinderCard
             className="swipe"
             key={index}
